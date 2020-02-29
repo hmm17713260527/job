@@ -54,13 +54,11 @@ public class UserController {
     public ResultModel<Object> addUser(PmsUser pmsUser) {
 
         try {
-            String salt = PasswordSecurityUtil.generateSalt();
-            String pwdSalt = PasswordSecurityUtil.enCode32(pmsUser.getPassword() + salt);
 
-            pmsUser.setCreateTime(new Date()).setStatus(2).setPassword(pwdSalt).setSalt(salt);
+            pmsUser.setCreateTime(new Date()).setStatus(2);
             userService.save(pmsUser);
 
-            EmailUtil.sendEmail(pmsUser.getEmail(), "激活链接", "<a href=\"http://127.0.0.1:8080/pms/user/toActivate/"+pmsUser.getEmail()+"\">点击激活</a>");
+            EmailUtil.sendEmail(pmsUser.getEmail(), "激活链接", "<a href=\"http://127.0.0.1:8080/job/user/toActivate/"+pmsUser.getEmail()+"\">点击激活</a>");
             return new ResultModel<>().success("注册成功,需邮箱激活");
 
         } catch (Exception e) {
@@ -71,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping("login")
-    public ResultModel<Object> login1(String userName, String password, HttpSession session) {
+    public ResultModel<Object> login1(String userName, String password) {
         try {
             if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
                 return new ResultModel<>().error(SystemConstant.STRING_01);

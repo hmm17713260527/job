@@ -108,9 +108,6 @@
                             }
                         }
                     },
-                    sex:{
-                        required:true
-                    },
                     age:{
                         required:true,
                         digits:true
@@ -147,9 +144,6 @@
                         email:"邮箱格式不对",
                         remote:"已注册"
                     },
-                    sex:{
-                        required:"性别！！！"
-                    },
                     age:{
                         required:"年龄都不写！！",
                         digits:"只能是数字"
@@ -166,8 +160,12 @@
         $.validator.setDefaults({
             submitHandler: function() {
                 var index = layer.load(0, {shade:0.5});
+
                 var pwd = md5($("#password").val());
-                $("#password").val(pwd);
+                var salt = $("#salt").val();
+                var password = md5(pwd + salt);
+                $("#password").val(password);
+
                 $.post("<%=request.getContextPath() %>/user/addUser",
                     $("#fm").serialize(),
                     function(data){
@@ -195,6 +193,7 @@
 
 <form id = "fm">
     <input type="hidden" name = "_method" value = "POST">
+    <input type="hidden" name = "salt" value = "${salt}" id = "salt">
     用户名:<input type = "text" name = "userName" id = "userName"/><br/>
     密    码:<input type = "text" name = "password" id = "password"/><br/>
     重新输入密码:<input type = "text" name = "password1"/><br/>
@@ -202,6 +201,7 @@
     邮箱:<input type = "text" name = "email" id = "email"/><br/>
     性别:<input type = "radio" name = "sex" value="1" checked/>男<input type = "radio" name = "sex" value="2"/>女<br/>
     年龄:<input type = "text" name = "age" id = "age"/><br/>
+    角色:<input type = "radio" name = "type" value="1" checked/>用户<input type = "radio" name = "type" value="2"/>管理员<br/>
     <input type = "hidden" name = "isDel" value = "1"/><br/>
     <input type = "submit"/>
 

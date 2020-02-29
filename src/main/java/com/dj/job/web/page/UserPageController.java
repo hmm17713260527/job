@@ -1,6 +1,7 @@
 package com.dj.job.web.page;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dj.job.service.UserService;
+import com.dj.job.util.PasswordSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,9 @@ public class UserPageController {
 
 
     @RequestMapping("toAdd")
-    public String toAdd() {
+    public String toAdd(Model model) throws Exception {
+        String salt = PasswordSecurityUtil.generateSalt();
+        model.addAttribute("salt", salt);
         return "user/add";
     }
 

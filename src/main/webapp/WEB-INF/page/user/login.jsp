@@ -25,6 +25,7 @@
             "<%=request.getContextPath()%>/user/findSalt",
             {"userName" : name.value, "_method" : "get"},
             function (data) {
+                alert(data.msg);
                 $("#salt").val(data.msg);
             })
 
@@ -35,8 +36,8 @@
 
         var pwd = md5($("#password").val());
         var salt = $("#salt").val();
-        var pwds = md5(pwd + salt);
-        $("#password").val(pwds)
+        var password = md5(pwd + salt);
+        $("#password").val(password);
 
         $.get("<%=request.getContextPath()%>/user/login",
             $("#fm").serialize(),

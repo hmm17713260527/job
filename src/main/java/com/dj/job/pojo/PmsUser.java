@@ -56,6 +56,11 @@ public class PmsUser {
 
     private Integer age;
 
+    /**
+     * 1用户，2管理员
+     */
+    private Integer type;
+
 
 
 
