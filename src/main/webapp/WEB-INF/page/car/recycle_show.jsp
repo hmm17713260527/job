@@ -16,7 +16,6 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>\static\layer-v3.1.1\layer\layer.js"></script>
 <script type="text/javascript">
 
-
     var totalNum = 0;
 
     $(function() {
@@ -52,8 +51,6 @@
                 var pageHtml = "<input type='button' value='上一页' onclick='page("+(parseInt(pageNo) - 1)+")'>";
                 pageHtml += "<input type='button' value='下一页' onclick='page("+(parseInt(pageNo) + 1)+")')'>";
                 $("#pageInfo").html(pageHtml);
-
-
             });
     }
 
@@ -72,36 +69,6 @@
 
     }
 
-    function find(){
-        $("#pageNo").val(1);
-        search();
-    }
-    function toUpdate() {
-        var chkValue = $('input[name="ids"]:checked');
-        if (chkValue.length == 0) {
-            layer.msg('未选中');
-        } else if (chkValue.length > 1) {
-            layer.msg('多选');
-        } else {
-            var id = chkValue.val();
-            window.location.href = "<%=request.getContextPath()%>/car/toUpdate/"+id;
-        }
-    }
-
-
-    function toAdd() {
-        layer.open({
-            type: 2,
-            title: '新增页面',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['380px', '80%'],
-            content: '<%=request.getContextPath()%>/car/toAdd'
-        });
-    }
-
-
-
     function del() {
         var chkValue = $('input[name="ids"]:checked');
         if (chkValue.length == 0) {
@@ -112,14 +79,14 @@
             var id = chkValue.val();
             var index = layer.load(0, {shade:0.5});
             $.post("<%=request.getContextPath()%>/car/del",
-                {"id" : id, "isDel" : 2, "_method" : "delete"},
+                {"id" : id, "isDel" : 1, "_method" : "delete"},
                 function(data){
                     layer.close(index);
                     layer.msg(data.msg, function(){
                         if (data.code != 200) {
                             return;
                         }
-                        window.location.href = "<%=request.getContextPath()%>/car/toShow";
+                        window.location.href = "<%=request.getContextPath()%>/car/toRecycleShow";
                     });
 
                 })
@@ -134,16 +101,9 @@
 <body>
 
 <form id = "fm">
-    <%--<input type="hidden" name="_method" value="get"/>--%>
     <input type="hidden" value="1" id="pageNo" name="pageNo">
-    品牌:<input type = "text" name = "brand"/><br/>
-    <input type = "hidden" name = "isDel" value = "1"/><br/>
-    <input type = "button" value = "search" onclick = "find()"/><br/>
-    <c:if test="${user.type == 2}">
-        <input type="button" value="新增" onclick="toAdd()"/>
-        <input type="button" value="删除" onclick="del()"/>
-        <input type="button" value="修改" onclick="toUpdate()"/>
-    </c:if>
+    <input type = "hidden" name = "isDel" value = "2"/><br/>
+    <input type="button" value="恢复" onclick="del()"/>
     <table cellpadding='12px' cellspacing='0px' border='1px'  bordercolor='gray' bgcolor='pink'>
         <tr>
             <td>id</td>
@@ -161,9 +121,5 @@
     </table>
 
 </form>
-<div id="pageInfo">
-
-</div>
-
 </body>
 </html>

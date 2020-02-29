@@ -18,9 +18,9 @@
 	<h2><a href="<%=request.getContextPath()%>/car/toShow" target="right">我的订单</a></h2>
 </c:if>
 
-<%--<c:if test="${user.type == 2}">
-	<h2><a href="<%=request.getContextPath()%>/commodity/toShow" target="right">销售额</a></h2>
-</c:if>--%>
+<c:if test="${user.type == 2}">
+	<h2><a href="<%=request.getContextPath()%>/car/toRecycleShow" target="right">回收站</a></h2>
+</c:if>
 
 
 </body>

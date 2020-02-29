@@ -2,15 +2,19 @@ package com.dj.job.web;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dj.job.common.ResultModel;
+import com.dj.job.common.SystemConstant;
 import com.dj.job.pojo.Car;
+import com.dj.job.pojo.PmsUser;
 import com.dj.job.service.CarService;
+import com.dj.job.util.CaoZuoFile;
+import com.dj.job.util.EmailUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +34,35 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+    @PutMapping
+    public ResultModel<Object> update(Car car, MultipartFile fileName) {
+
+        try {
+            String scfile = CaoZuoFile.scfile(fileName);
+            car.setCarImg(scfile);
+            carService.updateById(car);
+            return new ResultModel<>().success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
+        }
+
+    }
+
+
+    @DeleteMapping("del")
+    public ResultModel<Object> del(Car car) {
+        try {
+            carService.updateById(car);
+            return new ResultModel<>().success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
+        }
+
+    }
+
+
     @PostMapping("/list")
     public ResultModel<Object> show(Car car, Integer pageNo) {
         HashMap<String, Object> map = new HashMap<>();
@@ -47,7 +80,7 @@ public class CarController {
             return new ResultModel<>().success(map);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultModel<>().error("服务器异常");
+            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
         }
 
     }

@@ -25,7 +25,6 @@
             "<%=request.getContextPath()%>/user/findSalt",
             {"userName" : name.value, "_method" : "get"},
             function (data) {
-                alert(data.msg);
                 $("#salt").val(data.msg);
             })
 
