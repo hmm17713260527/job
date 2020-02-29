@@ -16,6 +16,10 @@ spring:
     view:
       prefix: /WEB-INF/page/ # \u9875\u9762\u524D\u7F00
       suffix: .jsp # \u9875\u9762\u540E\u7F00
+    hiddenmethod:
+      filter:
+        enabled: true
+    static-path-pattern: /static/**
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root

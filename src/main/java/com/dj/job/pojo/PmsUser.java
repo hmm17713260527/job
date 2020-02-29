@@ -35,6 +35,11 @@ public class PmsUser {
     private String email;
 
     /**
+     * 1激活，2未激活
+     */
+    private Integer status;
+
+    /**
      * 1男，2女
      */
     private Integer sex;
@@ -47,9 +52,9 @@ public class PmsUser {
      */
     private Integer isDel;
 
-    private String message;
-
     private String salt;
+
+    private Integer age;
 
 
 
