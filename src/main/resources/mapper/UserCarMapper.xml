@@ -22,5 +22,26 @@
 
     </select>
 
+    <select id="findTurnoverByLook" resultType="java.lang.Double">
+        SELECT
+        sum(price)
+        FROM
+        user_car
+        WHERE
+        is_del = 1
+        <if test="look == 1">
+            and TO_DAYS(create_time) = TO_DAYS(NOW())
+        </if>
+        <if test="look == 2">
+            and TO_DAYS(NOW()) - TO_DAYS(create_time) = 1
+        </if>
+        <if test="look == 3">
+            and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt; date(create_time)
+        </if>
+        <if test="look == 4">
+            and DATE_FORMAT(create_time, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+        </if>
+    </select>
+
 
 </mapper>

@@ -31,4 +31,9 @@ public class UserCarServiceImpl extends ServiceImpl<UserCarMapper, UserCar> impl
     public List<Car> findUserOrder(Integer id, Integer isDel) throws Exception {
         return userCarMapper.findUserOrder(id, isDel);
     }
+
+    @Override
+    public Double findTurnoverByLook(Integer look) throws Exception {
+        return userCarMapper.findTurnoverByLook(look);
+    }
 }

@@ -11,12 +11,10 @@ import com.dj.job.service.UserCarService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +37,27 @@ public class UserCarController {
 
     @Autowired
     private CarService carService;
+
+
+    @GetMapping("findTurnover")
+    public ResultModel<Object> rent(@RequestParam("looks[]") Integer[] looks) {
+        try {
+
+            List<Double> sumList = new ArrayList<>();
+            for (Integer look : looks) {
+                Double sum = userCarService.findTurnoverByLook(look);
+                if (null == sum) {
+                    sum = 0.0;
+                }
+                sumList.add(sum);
+            }
+            return new ResultModel<>().success(sumList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
+        }
+
+    }
 
 
     @PutMapping("repay")

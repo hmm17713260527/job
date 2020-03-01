@@ -20,4 +20,6 @@ import java.util.List;
 public interface UserCarMapper extends BaseMapper<UserCar> {
 
     List<Car> findUserOrder(@Param("id") Integer id, @Param("isDel") Integer isDel) throws DataAccessException;
+
+    Double findTurnoverByLook(@Param("look") Integer look) throws DataAccessException;
 }

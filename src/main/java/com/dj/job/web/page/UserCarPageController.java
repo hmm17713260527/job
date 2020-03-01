@@ -20,4 +20,9 @@ public class UserCarPageController {
     public String toShow() {
         return "userCar/show";
     }
+
+    @RequestMapping("toTurnoverShow")
+    public String toTurnoverShow() {
+        return "userCar/turnover_show";
+    }
 }

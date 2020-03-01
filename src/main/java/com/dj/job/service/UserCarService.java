@@ -17,4 +17,6 @@ import java.util.List;
  */
 public interface UserCarService extends IService<UserCar> {
     List<Car> findUserOrder(Integer id, Integer isDel) throws Exception;
+
+    Double findTurnoverByLook(Integer look) throws Exception;
 }

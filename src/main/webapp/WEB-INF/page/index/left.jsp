@@ -19,6 +19,7 @@
 </c:if>
 
 <c:if test="${user.type == 2}">
+	<h2><a href="<%=request.getContextPath()%>/userCar/toTurnoverShow" target="right">查看营业额</a></h2>
 	<h2><a href="<%=request.getContextPath()%>/car/toRecycleShow" target="right">回收站</a></h2>
 </c:if>
 
