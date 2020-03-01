@@ -62,7 +62,7 @@
         <input type="hidden" name = "_method" value = "get"/>
         用户名/手机号/邮箱:<input type = "text" name = "userName" id = "userName" onblur="inquire(this)"/><br/>
         密    码:<input type = "text" name = "password" id = "password"/><br/>
-        <a href="<%=request.getContextPath()%>/user/toAdd">还有没有账号?点我去注册</a>
+        <a href="<%=request.getContextPath()%>/user/toAdd">注册</a>
         <input type = "button" value = "login" onclick = "login()"/>
     </form>
 

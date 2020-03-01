@@ -26,7 +26,7 @@
 
     function search() {
         var index = layer.load(0, {shade:0.5});
-        $.post("<%=request.getContextPath() %>/car/list",
+        $.post("<%=request.getContextPath() %>/userCar/list",
             $("#fm").serialize(),
             function(data){
                 layer.close(index);
@@ -38,15 +38,12 @@
                 var html = "";
                 for (var i = 0; i < data.data.carList.length; i++) {
                     html += "<tr>";
-                    html += "<td><input type='checkbox' name = 'ids' value = '"+data.data.carList[i].id+"'/></td>";
+                    html += "<td>"+data.data.carList[i].id+"</td>";
                     html += "<td>"+data.data.carList[i].brand+"</td>";
                     html += "<td>"+data.data.carList[i].carName+"</td>";
                     html += "<td><img src='<%=request.getContextPath()%>/car/toImg?fileName="+data.data.carList[i].carImg+"' width='80px' height='80px'></td>";
-                    html += "<td>"+data.data.carList[i].count+"</td>";
                     html += "<td>"+data.data.carList[i].price+"</td>";
-                    <c:if test="${user.type == 1}">
-                        html += "<td><input type='button' value='租用' onclick='toRent("+data.data.carList[i].id+")'/></td>";
-                    </c:if>
+                    html += "<td><input type='button' value='返还' onclick='toRetuen("+data.data.carList[i].id+")'/></td>";
                     html += "</tr>";
                 }
                 $("#tbd").html(html);
@@ -77,14 +74,10 @@
 
     }
 
-    function find(){
-        $("#pageNo").val(1);
-        search();
-    }
 
-    function toRent(id) {
+    function toRetuen(id) {
         var index = layer.load(0, {shade:0.5});
-        $.post("<%=request.getContextPath()%>/car/rent",
+        $.post("<%=request.getContextPath()%>/userCar/repay",
             {"id" : id, "_method" : "put"},
             function(data){
                 layer.close(index);
@@ -92,61 +85,10 @@
                     if (data.code != 200) {
                         return;
                     }
-                    window.location.href = "<%=request.getContextPath()%>/car/toShow";
+                    window.location.href = "<%=request.getContextPath()%>/userCar/toShow";
                 });
 
             })
-    }
-
-
-    function toUpdate() {
-        var chkValue = $('input[name="ids"]:checked');
-        if (chkValue.length == 0) {
-            layer.msg('未选中');
-        } else if (chkValue.length > 1) {
-            layer.msg('多选');
-        } else {
-            var id = chkValue.val();
-            window.location.href = "<%=request.getContextPath()%>/car/toUpdate/"+id;
-        }
-    }
-
-
-    function toAdd() {
-        layer.open({
-            type: 2,
-            title: '新增页面',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['380px', '80%'],
-            content: '<%=request.getContextPath()%>/car/toAdd'
-        });
-    }
-
-
-
-    function del() {
-        var chkValue = $('input[name="ids"]:checked');
-        if (chkValue.length == 0) {
-            layer.msg('未选中');
-        } else if (chkValue.length > 1) {
-            layer.msg('多选');
-        } else {
-            var id = chkValue.val();
-            var index = layer.load(0, {shade:0.5});
-            $.post("<%=request.getContextPath()%>/car/del",
-                {"id" : id, "isDel" : 2, "_method" : "delete"},
-                function(data){
-                    layer.close(index);
-                    layer.msg(data.msg, function(){
-                        if (data.code != 200) {
-                            return;
-                        }
-                        window.location.href = "<%=request.getContextPath()%>/car/toShow";
-                    });
-
-                })
-        }
     }
 
 
@@ -157,27 +99,16 @@
 <body>
 
 <form id = "fm">
-    <%--<input type="hidden" name="_method" value="get"/>--%>
-    <input type="hidden" value="1" id="pageNo" name="pageNo">
-    品牌:<input type = "text" name = "brand"/><br/>
     <input type = "hidden" name = "isDel" value = "1"/><br/>
-    <input type = "button" value = "search" onclick = "find()"/><br/>
-    <c:if test="${user.type == 2}">
-        <input type="button" value="新增" onclick="toAdd()"/>
-        <input type="button" value="删除" onclick="del()"/>
-        <input type="button" value="修改" onclick="toUpdate()"/>
-    </c:if>
+    <input type="hidden" value="1" id="pageNo" name="pageNo">
     <table cellpadding='12px' cellspacing='0px' border='1px'  bordercolor='gray' bgcolor='pink'>
         <tr>
             <td>id</td>
             <td>品牌</td>
             <td>car名</td>
             <td>照片</td>
-            <td>库存</td>
             <td>租金</td>
-            <c:if test="${user.type == 1}">
-                <td>操作</td>
-            </c:if>
+            <td>操作</td>
         </tr>
 
         <tbody id = "tbd">

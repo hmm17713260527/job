@@ -26,8 +26,9 @@
     <input type="hidden" name = "id" value="${car.id}"/>
     品牌:<input type = "text" name = "brand" value="${car.brand}"/><br/>
     车名:<input type = "text" name = "carName" value="${car.carName}"/><br/>
-    照片:car
-    <img src="<%=request.getContextPath()%>//toImg?fileName=${car.carImg}" width="80px" height="80px">
+    照片:
+<%--    <img src='<%=request.getContextPath()%>/car/toImg?fileName="+${car.carImg}+"' width='80px' height='80px'>--%>
+    <img src="<%=request.getContextPath()%>/car/toImg?fileName=${car.carImg}" width="80px" height="80px">
     照片:<input type="file" name = "fileName"/><br/>
     库存:<input type = "text" name = "count" value="${car.count}"/><br/>
     租金:<input type = "text" name = "price" value="${car.price}"/><br/>
