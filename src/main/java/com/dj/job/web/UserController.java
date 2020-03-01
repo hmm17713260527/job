@@ -6,7 +6,6 @@ import com.dj.job.common.SystemConstant;
 import com.dj.job.pojo.PmsUser;
 import com.dj.job.service.UserService;
 import com.dj.job.util.EmailUtil;
-import com.dj.job.util.PasswordSecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -42,10 +40,10 @@ public class UserController {
             PmsUser user = userService.getOne(wrapper);
             user.setStatus(status);
             userService.updateById(user);
-            return new ResultModel<>().success("激活成功");
+            return new ResultModel<>().success();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultModel<>().error("服务器异常");
+            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
         }
 
     }
@@ -59,7 +57,7 @@ public class UserController {
             userService.save(pmsUser);
 
             EmailUtil.sendEmail(pmsUser.getEmail(), "激活链接", "<a href=\"http://127.0.0.1:8080/job/user/toActivate/"+pmsUser.getEmail()+"\">点击激活</a>");
-            return new ResultModel<>().success("注册成功,需邮箱激活");
+            return new ResultModel<>().success(SystemConstant.STRING_4);
 
         } catch (Exception e) {
             e.printStackTrace();

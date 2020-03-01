@@ -2,6 +2,7 @@ package com.dj.job.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dj.job.pojo.Car;
+import com.dj.job.pojo.PmsUser;
 
 /**
  * @ProjectName: job
@@ -13,4 +14,5 @@ import com.dj.job.pojo.Car;
  * @Version: 1.0
  */
 public interface CarService extends IService<Car> {
+    void updateOrder(Car car, PmsUser user) throws Exception;
 }

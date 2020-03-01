@@ -6,7 +6,27 @@ public class SystemConstant {
      * 不能为空
      */
     public static final String STRING_01 = "不能为空";
-	
+
+    /**
+     * 现阶段无此货
+     */
+    public static final String STRING_COUNT = "现阶段无此货";
+
+    /**
+     * 注册成功,需邮箱激活
+     */
+    public static final String STRING_4 = "注册成功,需邮箱激活";
+
+    /**
+     * 库存
+     */
+    public static final Integer COUNT = 0;
+
+    /**
+     * 每页大小
+     */
+    public static final Integer PAGESIZE = 4;
+
     /**
      * 账号密码错误
      */

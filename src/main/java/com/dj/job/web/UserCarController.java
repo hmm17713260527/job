@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,8 +34,6 @@ public class UserCarController {
     @Autowired
     private UserCarService userCarService;
 
-    @Autowired
-    private CarService carService;
 
 
     @GetMapping("findTurnover")
@@ -64,21 +61,7 @@ public class UserCarController {
     public ResultModel<Object> rent(Integer id) {
 
         try {
-            QueryWrapper<UserCar> wrapper = new QueryWrapper<UserCar>();
-            wrapper.eq("id", id);
-            UserCar userCar = userCarService.getOne(wrapper);
-
-            QueryWrapper<Car> carWrapper = new QueryWrapper<Car>();
-            carWrapper.eq("id", userCar.getCarId());
-
-            Car car = carService.getOne(carWrapper);
-            Integer count = car.getCount() + 1;
-            car.setCount(count);
-            carService.updateById(car);
-
-            userCar.setIsDel(2);
-            userCarService.updateById(userCar);
-
+            userCarService.updateOrder(id);
             return new ResultModel<>().success();
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +75,7 @@ public class UserCarController {
     public ResultModel<Object> show(Integer isDel, Integer pageNo, HttpSession session) {
         HashMap<String, Object> map = new HashMap<>();
         try {
-            PageHelper.startPage(pageNo, 2);
+            PageHelper.startPage(pageNo, SystemConstant.PAGESIZE);
 
             PmsUser user = (PmsUser) session.getAttribute("user");
             List<Car> carList = userCarService.findUserOrder(user.getId(), isDel);

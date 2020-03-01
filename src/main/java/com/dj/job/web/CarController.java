@@ -9,11 +9,9 @@ import com.dj.job.pojo.UserCar;
 import com.dj.job.service.CarService;
 import com.dj.job.service.UserCarService;
 import com.dj.job.util.CaoZuoFile;
-import com.dj.job.util.EmailUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,17 +46,13 @@ public class CarController {
             QueryWrapper<Car> wrapper = new QueryWrapper<Car>();
             wrapper.eq("id", id);
             Car car = carService.getOne(wrapper);
-            if (null == car.getCount() || car.getCount() == 0) {
-                return new ResultModel<>().error("现阶段无此货");
+            if (null == car.getCount() || car.getCount().equals(SystemConstant.COUNT)) {
+                return new ResultModel<>().error(SystemConstant.STRING_COUNT);
             }
 
             PmsUser user = (PmsUser) session.getAttribute("user");
 
-            userCarService.save(new UserCar().setIsDel(1).setUserId(user.getId()).setCarId(id).setCreateTime(new Date()).setPrice(car.getPrice()));
-
-            Integer count = car.getCount() - 1;
-            car.setCount(count);
-            carService.updateById(car);
+            carService.updateOrder(car, user);
 
             return new ResultModel<>().success();
         } catch (Exception e) {
@@ -100,7 +94,7 @@ public class CarController {
     public ResultModel<Object> show(Car car, Integer pageNo) {
         HashMap<String, Object> map = new HashMap<>();
         try {
-            PageHelper.startPage(pageNo, 2);
+            PageHelper.startPage(pageNo, SystemConstant.PAGESIZE);
             QueryWrapper<Car> wrapper = new QueryWrapper<>();
             if (null != car.getBrand()) {
                 wrapper.like("brand", car.getBrand());
