@@ -2,6 +2,7 @@ package com.dj.job.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dj.job.common.SystemConstant;
 import com.dj.job.mapper.UserCarMapper;
 import com.dj.job.pojo.Car;
 import com.dj.job.pojo.UserCar;
@@ -42,6 +43,10 @@ public class UserCarServiceImpl extends ServiceImpl<UserCarMapper, UserCar> impl
         return userCarMapper.findTurnoverByLook(look);
     }
 
+    /**
+     * 用户返还
+     * @param id
+     */
     @Override
     public void updateOrder(Integer id) {
         UserCar userCar = userCarMapper.selectById(id);
@@ -50,7 +55,7 @@ public class UserCarServiceImpl extends ServiceImpl<UserCarMapper, UserCar> impl
         carWrapper.eq("id", userCar.getCarId());
 
         Car car = carService.getOne(carWrapper);
-        Integer count = car.getCount() + 1;
+        Integer count = car.getCount() + SystemConstant.I;
         car.setCount(count);
         carService.updateById(car);
 

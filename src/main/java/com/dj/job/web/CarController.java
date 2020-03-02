@@ -36,9 +36,13 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @Autowired
-    private UserCarService userCarService;
 
+    /**
+     * 租车
+     * @param id
+     * @param session
+     * @return
+     */
     @PutMapping("rent")
     public ResultModel<Object> rent(Integer id, HttpSession session) {
 
@@ -51,7 +55,6 @@ public class CarController {
             }
 
             PmsUser user = (PmsUser) session.getAttribute("user");
-
             carService.updateOrder(car, user);
 
             return new ResultModel<>().success();
@@ -61,6 +64,13 @@ public class CarController {
         }
 
     }
+
+    /**
+     * 修改
+     * @param car
+     * @param fileName
+     * @return
+     */
     @PutMapping
     public ResultModel<Object> update(Car car, MultipartFile fileName) {
 
@@ -77,6 +87,11 @@ public class CarController {
     }
 
 
+    /**
+     * 删除
+     * @param car
+     * @return
+     */
     @DeleteMapping("del")
     public ResultModel<Object> del(Car car) {
         try {
@@ -89,7 +104,12 @@ public class CarController {
 
     }
 
-
+    /**
+     * 车辆展示
+     * @param car
+     * @param pageNo
+     * @return
+     */
     @PostMapping("/list")
     public ResultModel<Object> show(Car car, Integer pageNo) {
         HashMap<String, Object> map = new HashMap<>();

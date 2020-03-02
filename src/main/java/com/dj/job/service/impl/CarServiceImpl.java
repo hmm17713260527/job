@@ -1,6 +1,7 @@
 package com.dj.job.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dj.job.common.SystemConstant;
 import com.dj.job.mapper.CarMapper;
 import com.dj.job.mapper.UserCarMapper;
 import com.dj.job.pojo.Car;
@@ -33,11 +34,17 @@ public class CarServiceImpl extends ServiceImpl<CarMapper, Car> implements CarSe
     @Autowired
     private CarMapper carMapper;
 
+    /**
+     * 用户的租用
+     * @param car
+     * @param user
+     */
     @Override
     public void updateOrder(Car car, PmsUser user) {
-        userCarMapper.insert(new UserCar().setIsDel(1).setUserId(user.getId()).setCarId(car.getId()).setCreateTime(new Date()).setPrice(car.getPrice()));
+        userCarMapper.insert(new UserCar().setIsDel(1).setUserId(user.getId()).setCarId(car.getId())
+                .setCreateTime(new Date()).setPrice(car.getPrice()));
 
-        Integer count = car.getCount() - 1;
+        Integer count = car.getCount() - SystemConstant.I;
         car.setCount(count);
         carMapper.updateById(car);
     }

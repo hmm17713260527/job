@@ -35,7 +35,11 @@ public class UserCarController {
     private UserCarService userCarService;
 
 
-
+    /**
+     * 营业额
+     * @param looks
+     * @return
+     */
     @GetMapping("findTurnover")
     public ResultModel<Object> rent(@RequestParam("looks[]") Integer[] looks) {
         try {
@@ -56,7 +60,11 @@ public class UserCarController {
 
     }
 
-
+    /**
+     * 还车
+     * @param id
+     * @return
+     */
     @PutMapping("repay")
     public ResultModel<Object> rent(Integer id) {
 
@@ -70,7 +78,13 @@ public class UserCarController {
 
     }
 
-
+    /**
+     * 用户个人车辆展示
+     * @param isDel
+     * @param pageNo
+     * @param session
+     * @return
+     */
     @PostMapping("/list")
     public ResultModel<Object> show(Integer isDel, Integer pageNo, HttpSession session) {
         HashMap<String, Object> map = new HashMap<>();

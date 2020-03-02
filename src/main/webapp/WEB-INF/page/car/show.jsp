@@ -113,14 +113,17 @@
 
 
     function toAdd() {
-        layer.open({
-            type: 2,
-            title: '新增页面',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['380px', '80%'],
-            content: '<%=request.getContextPath()%>/car/toAdd'
-        });
+
+        window.location.href = "<%=request.getContextPath()%>/car/toAdd";
+
+        <%--layer.open({--%>
+        <%--    type: 2,--%>
+        <%--    title: '新增页面',--%>
+        <%--    shadeClose: true,--%>
+        <%--    shade: 0.8,--%>
+        <%--    area: ['380px', '80%'],--%>
+        <%--    content: '<%=request.getContextPath()%>/car/toAdd'--%>
+        <%--});--%>
     }
 
 

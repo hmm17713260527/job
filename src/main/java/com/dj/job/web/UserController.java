@@ -32,6 +32,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 邮箱激活
+     * @param status
+     * @param email
+     * @return
+     */
     @PutMapping("updateStatusByEmail")
     public ResultModel<Object> updateStatusByEmail(Integer status, String email) {
         try {
@@ -48,17 +54,18 @@ public class UserController {
 
     }
 
+    /**
+     * 注册
+     * @param pmsUser
+     * @return
+     */
     @PostMapping("addUser")
     public ResultModel<Object> addUser(PmsUser pmsUser) {
-
         try {
-
             pmsUser.setCreateTime(new Date()).setStatus(2);
             userService.save(pmsUser);
-
             EmailUtil.sendEmail(pmsUser.getEmail(), "激活链接", "<a href=\"http://127.0.0.1:8080/job/user/toActivate/"+pmsUser.getEmail()+"\">点击激活</a>");
             return new ResultModel<>().success(SystemConstant.STRING_4);
-
         } catch (Exception e) {
             e.printStackTrace();
             return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
@@ -66,25 +73,6 @@ public class UserController {
 
     }
 
-    @GetMapping("login")
-    public ResultModel<Object> login1(String userName, String password) {
-        try {
-            if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
-                return new ResultModel<>().error(SystemConstant.STRING_01);
-            }
-
-            //shiro登陆
-            Subject subject = SecurityUtils.getSubject(); //获取subject
-            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-            subject.login(token);
-
-            return new ResultModel<>().success();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
-        }
-
-    }
 
     @GetMapping("findSalt")
     public ResultModel<Object> findSalt(String userName) {
@@ -94,6 +82,37 @@ public class UserController {
         return new ResultModel<>().success(user.getSalt());
     }
 
+
+    /**
+     * 登陆
+     * @param userName
+     * @param password
+     * @return
+     */
+    @GetMapping("login")
+    public ResultModel<Object> login1(String userName, String password) {
+        try {
+            if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
+                return new ResultModel<>().error(SystemConstant.STRING_01);
+            }
+            //shiro登陆
+            Subject subject = SecurityUtils.getSubject(); //获取subject
+            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+            subject.login(token);
+            return new ResultModel<>().success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultModel<>().error(SystemConstant.STRING_03 + e.getMessage());
+        }
+
+    }
+
+
+    /**
+     * 新增判断邮箱
+     * @param email
+     * @return
+     */
     @GetMapping("findByEmail")
     public boolean findByEmail(String email) {
         try {
@@ -107,6 +126,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 新增判断用户名
+     * @param userName
+     * @return
+     */
     @GetMapping("findByName")
     public boolean findByName(String userName) {
         try {
@@ -120,6 +144,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 新增判断手机号
+     * @param phone
+     * @return
+     */
     @GetMapping("findByPhone")
     public boolean findByPhone(String phone) {
         try {

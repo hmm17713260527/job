@@ -18,6 +18,11 @@ public class SystemConstant {
     public static final String STRING_4 = "注册成功,需邮箱激活";
 
     /**
+     * 每次租用1辆
+     */
+    public static final Integer I = 1;
+
+    /**
      * 库存
      */
     public static final Integer COUNT = 0;
