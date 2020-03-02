@@ -64,7 +64,7 @@ public class UserController {
         try {
             pmsUser.setCreateTime(new Date()).setStatus(2);
             userService.save(pmsUser);
-            EmailUtil.sendEmail(pmsUser.getEmail(), "激活链接", "<a href=\"http://127.0.0.1:8080/job/user/toActivate/"+pmsUser.getEmail()+"\">点击激活</a>");
+            EmailUtil.sendEmail(pmsUser.getEmail(), SystemConstant.STRING_EMAIL, pmsUser.getEmail());
             return new ResultModel<>().success(SystemConstant.STRING_4);
         } catch (Exception e) {
             e.printStackTrace();

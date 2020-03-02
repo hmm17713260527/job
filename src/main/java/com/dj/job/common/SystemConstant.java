@@ -8,6 +8,11 @@ public class SystemConstant {
     public static final String STRING_01 = "不能为空";
 
     /**
+     * 激活链接
+     */
+    public static final String STRING_EMAIL = "激活链接";
+
+    /**
      * 现阶段无此货
      */
     public static final String STRING_COUNT = "现阶段无此货";

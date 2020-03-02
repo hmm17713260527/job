@@ -25,6 +25,17 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/lianxi?characterEncoding=UTF-8&useOldAliasMetadataBehavior=true&useSSL=false
+#  mail:
+#    host: smtp.qq.com
+#    default-encoding: utf-8
+#    username: 2101265151@qq.com
+#    password: 159357zz
+#    properties:
+#      mail:
+#        smtp:
+#          ssl:
+#            enable: true
+
 
 # Mybatis-Plus \u914D\u7F6E
 mybatis-plus:
