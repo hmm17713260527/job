@@ -10,18 +10,43 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>\static\layer-v3.1.1\layer\layer.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>\static\zTree\zTree_v3\js\jquery.ztree.core.js"></script>
 </head>
+<script type="text/javascript">
+	var setting = {
+		async: {
+			enable: true,//接收json格式数据
+			url:"<%=request.getContextPath()%>/carRes/toList",//路径
+			autoParam:["id"],//返回的参数
+		},
+		data: {
+			simpleData: {
+				enable: true,
+				pIdKey: "parentId"
+
+			},
+			key: {
+				name: "resName",
+				url: "noexist",
+				isParent: "checked"
+			}
+		},
+		callback: {
+			onClick: function (event, treeId, treeNode) {
+				if (!treeNode.isParent) {
+					parent.right.location.href = "<%=request.getContextPath()%>" + treeNode.url;
+				}
+			}
+		}
+	};
+
+	$(document).ready(function(){
+		$.fn.zTree.init($("#treeDemo"), setting);
+	});
+</script>
 <body align="center">
 
-<h2><a href="<%=request.getContextPath()%>/car/toShow" target="right">商品信息</a></h2>
+<div id="treeDemo" class="ztree">
 
-<c:if test="${user.type == 1}">
-	<h2><a href="<%=request.getContextPath()%>/userCar/toShow" target="right">我的订单</a></h2>
-</c:if>
-
-<c:if test="${user.type == 2}">
-	<h2><a href="<%=request.getContextPath()%>/userCar/toTurnoverShow" target="right">查看营业额</a></h2>
-	<h2><a href="<%=request.getContextPath()%>/car/toRecycleShow" target="right">回收站</a></h2>
-</c:if>
+</div>
 
 
 </body>
